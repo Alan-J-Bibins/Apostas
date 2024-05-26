@@ -12,18 +12,17 @@ class DateHandler:
     Handler for date using the date and timedelta class from the builtin datetime module of python
     """
 
-    def __init__(self, datestr: str = ""):
+    def __init__(self, daydiff: int, datestr: str = ""):
         self.date = d.today() if datestr == "" else d.fromisoformat(datestr)
+        self.daydiff = 0
 
-    def update_date(self):
+    def update(self):
         """
-        Updates self.dateobj to current date
+        updates daydiff
         """
-        self.date = d.today()
-
-    def return_diff(self, other_date: d) -> int:
-        """
-        Returns difference between two date objects as days
-        """
+        other_date: d = d.today()
         diff: timedelta = other_date - self.date
-        return diff.days
+        self.daydiff = diff.days
+
+    def return_diff(self):
+        return self.daydiff
