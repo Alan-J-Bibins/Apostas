@@ -12,7 +12,7 @@ class DateHandler:
     Handler for date using the date and timedelta class from the builtin datetime module of python
     """
 
-    def __init__(self, daydiff: int, datestr: str = ""):
+    def __init__(self, datestr: str = ""):
         self.date = d.today() if datestr == "" else d.fromisoformat(datestr)
         self.daydiff = 0
 
@@ -25,4 +25,7 @@ class DateHandler:
         self.daydiff = diff.days
 
     def return_diff(self):
+        """
+        Returns the difference between current day and the day that the task was created
+        """
         return self.daydiff
