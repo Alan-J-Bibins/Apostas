@@ -14,6 +14,7 @@ class DateHandler:
 
     def __init__(self, datestr: str = ""):
         self.date = d.today() if datestr == "" else d.fromisoformat(datestr)
+        self.strdate = self.date.strftime("%d-%m-%Y")
         self.daydiff = 0
 
     def update(self):
