@@ -7,7 +7,7 @@ from date_handler import DateHandler as date_handler
 
 class Task:
     """
-    Task Class
+    Task object
     """
     def __init__(self):
         self.topic: str = ""
