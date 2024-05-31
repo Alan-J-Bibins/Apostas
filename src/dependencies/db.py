@@ -29,7 +29,9 @@ class db:
             if err.errno != errorcode.ER_TABLE_EXISTS_ERROR:
                 print(err.msg)
 
-    def insert_data(self, table_name, topic, date_created, daydelta):
+    def insert_data(
+        self, table_name: str, topic: str, date_created: str, daydelta: int
+    ):
         """
         Insert data into table
         """

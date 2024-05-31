@@ -9,6 +9,6 @@ class Task:
     """
     Task object
     """
-    def __init__(self):
-        self.topic: str = ""
+    def __init__(self, topic:str):
+        self.topic: str = topic
         self.date_handler: date_handler = date_handler()
