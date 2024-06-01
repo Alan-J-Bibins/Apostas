@@ -1,14 +1,18 @@
-from task import Task
-from db import db
+from dependencies.task import Task
+from dependencies.db import db
 
 
 class TaskHandler:
     """
     Class that handles creation of tasks along with operations for them
     """
+
     def __init__(self):
         self.db_handler = db()
-        self.db_handler.create_table("Topic", "topic_id INT PRIMARY KEY AUTO_INCREMENT, topic TEXT, date_created VARCHAR(255), daydelta INT")
+        self.db_handler.create_table(
+            "Topic",
+            "topic_id INT PRIMARY KEY AUTO_INCREMENT, topic TEXT, date_created VARCHAR(255), daydelta INT",
+        )
 
     def make_new_task(self):
         """
@@ -16,7 +20,15 @@ class TaskHandler:
         """
         topic = input("Enter topic: ")
         task_obj = Task(topic)
-        self.db_handler.insert_data("Topic", task_obj.topic, task_obj.date_handler.strdate, 0)
+        print(
+            f"DEBUG: {task_obj.topic} {task_obj.date_handler.strdate} {task_obj.date_handler.daydiff}"
+        )
+        self.db_handler.insert_data(
+            "Topic",
+            task_obj.topic,
+            task_obj.date_handler.strdate,
+            task_obj.date_handler.daydiff,
+        )
 
     def delete_task(self):
         """

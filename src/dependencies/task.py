@@ -2,7 +2,7 @@
 Python module that defines the Task class that Apostas uses
 """
 
-from date_handler import DateHandler as date_handler
+from dependencies.date_handler import DateHandler as date_handler
 
 
 class Task:

@@ -2,7 +2,6 @@
 Module for handling the mysql database queries
 """
 
-from datetime import date
 import mysql.connector as mcn
 from mysql.connector import errorcode
 
@@ -36,10 +35,11 @@ class db:
         Insert data into table
         """
 
-        command = f"INSERT INTO {table_name} (topic, date_created, daydelta) VALUES (%s %s %s);"
+        command = f"INSERT INTO {table_name} (topic, date_created, daydelta) VALUES (%s, %s, %s);"
         data = (topic, date_created, daydelta)
         try:
             self.cursor.execute(command, data)
+            self.cnx.commit()
         except mcn.Error as err:
             print("Value insertion was unsuccesful")
             print(err.msg)
