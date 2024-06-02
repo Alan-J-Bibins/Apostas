@@ -9,8 +9,8 @@ def cog():
     match(choice):
         case 1:
             task_handler_obj.make_new_task()
-        # case 2:
-            # task_handler_obj.create_task_list()
+        case 2:
+            task_handler_obj.create_task_list()
     task_handler_obj.db_handler.close_connection()
 
 if __name__ == "__main__":

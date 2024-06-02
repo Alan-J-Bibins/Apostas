@@ -50,8 +50,8 @@ class db:
         self.cursor.execute(command)
         self.cnx.commit()
 
-    def query_db(self, table_name, query="*") -> list:
-        command = f"SELECT {query} FROM {table_name};"
+    def query_db(self, table_name, query="*", where_section="") -> list:
+        command = f"SELECT {query} FROM {table_name} {where_section};"
         self.cursor.execute(command)
         data = self.cursor.fetchall()
         return data

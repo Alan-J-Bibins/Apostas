@@ -21,10 +21,8 @@ class TaskHandler:
 
     def update_db_daydelta(self):
         """
-        Updates
+        Updates daydelta column
         """
-        #spacing_intervals = [1,3,7,16,32,66]
-
         topics_in_db = self.db_handler.query_db("Topic", "topic, topic_id, date_created")
         print(topics_in_db)
         list_of_tasks = []
@@ -53,3 +51,20 @@ class TaskHandler:
             task_obj.date_handler.daydiff,
         )
         self.update_db_daydelta()
+
+    def create_task_list(self):
+        """
+        Makes List of topics to revise
+        """
+        self.update_db_daydelta()
+        spacing_intervals = [1,3,7,16,32,66]
+        topic_query = self.db_handler.query_db("Topic")
+        task_list = []
+        for data in topic_query:
+            if data[3] in spacing_intervals:
+                print("heloo there")
+                task_list.append(data[1])
+        print("Tasks for today:")
+        print(task_list)
+
+
