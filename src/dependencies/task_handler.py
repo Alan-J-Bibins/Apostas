@@ -9,6 +9,7 @@ class TaskHandler:
 
     def __init__(self):
         self.db_handler = db()
+        self.db_handler.connect_to_db("Apostas")
         self.db_handler.create_table(
             "Topic",
             "topic_id INT PRIMARY KEY AUTO_INCREMENT, topic TEXT, date_created VARCHAR(255), daydelta INT",

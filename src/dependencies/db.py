@@ -2,6 +2,7 @@
 Module for handling the mysql database queries
 """
 
+import dependencies.config_db as cdb
 import mysql.connector as mcn
 from mysql.connector import errorcode
 
@@ -9,13 +10,32 @@ from mysql.connector import errorcode
 class db:
     def __init__(self):
         self.cnx = mcn.connect(
-            host="localhost",
-            user="root",
-            password="!@#ItsRoot009",
-            database="apostasmvp",
+            host=cdb.host,
+            user=cdb.user,
+            password=cdb.password,
         )
 
         self.cursor = self.cnx.cursor()
+
+    def connect_to_db(self, DB_NAME):
+        try:
+            self.cursor.execute("USE {}".format(DB_NAME))
+        except mcn.Error as err:
+            print("Database {} does not exists.".format(DB_NAME))
+            if err.errno == errorcode.ER_BAD_DB_ERROR:
+                self.create_db(DB_NAME)
+                print("Database {} created successfully.".format(DB_NAME))
+                self.cursor.execute("USE {}".format(DB_NAME))
+            else:
+                print(err.msg)
+                exit(1)
+
+    def create_db(self, DB_NAME):
+        try:
+            self.cursor.execute("CREATE DATABASE {};".format(DB_NAME))
+        except mcn.Error as err:
+            print("Failed to create Database")
+            print(err.msg)
 
     def create_table(self, table_name, table_description) -> None:
         """
@@ -44,7 +64,9 @@ class db:
             print("Value insertion was unsuccesful")
             print(err.msg)
 
-    def update_data(self,table_name,col_name, col_value, update_criteria, update_criteria_value):
+    def update_data(
+        self, table_name, col_name, col_value, update_criteria, update_criteria_value
+    ):
         command = f"UPDATE {table_name} SET {col_name} = {col_value} WHERE {update_criteria} = {update_criteria_value};"
         try:
             self.cursor.execute(command)
