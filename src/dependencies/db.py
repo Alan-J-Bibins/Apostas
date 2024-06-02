@@ -46,16 +46,25 @@ class db:
 
     def update_data(self,table_name,col_name, col_value, update_criteria, update_criteria_value):
         command = f"UPDATE {table_name} SET {col_name} = {col_value} WHERE {update_criteria} = {update_criteria_value};"
-        print(command)
-        self.cursor.execute(command)
-        self.cnx.commit()
+        try:
+            self.cursor.execute(command)
+            self.cnx.commit()
+        except mcn.Error as err:
+            print(err.msg)
 
     def query_db(self, table_name, query="*", where_section="") -> list:
         command = f"SELECT {query} FROM {table_name} {where_section};"
-        self.cursor.execute(command)
-        data = self.cursor.fetchall()
+        data = []
+        try:
+            self.cursor.execute(command)
+            data = self.cursor.fetchall()
+        except mcn.Error as err:
+            print(err.msg)
         return data
 
     def close_connection(self) -> None:
-        self.cursor.close()
-        self.cnx.close()
+        try:
+            self.cursor.close()
+            self.cnx.close()
+        except mcn.Error as err:
+            print(err.msg)

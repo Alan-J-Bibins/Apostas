@@ -24,7 +24,6 @@ class TaskHandler:
         Updates daydelta column
         """
         topics_in_db = self.db_handler.query_db("Topic", "topic, topic_id, date_created")
-        print(topics_in_db)
         list_of_tasks = []
         for data in topics_in_db:
             list_of_tasks.append(Task(data[0],data[1],data[2]))
@@ -41,9 +40,6 @@ class TaskHandler:
         """
         topic = input("Enter topic: ")
         task_obj = Task(topic)
-        print(
-            f"DEBUG: {task_obj.topic} {task_obj.date_handler.strdate} {task_obj.date_handler.daydiff}"
-        )
         self.db_handler.insert_data(
             "Topic",
             task_obj.topic,
