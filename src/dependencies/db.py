@@ -44,6 +44,12 @@ class db:
             print("Value insertion was unsuccesful")
             print(err.msg)
 
+    def update_data(self,table_name,col_name, col_value, update_criteria, update_criteria_value):
+        command = f"UPDATE {table_name} SET {col_name} = {col_value} WHERE {update_criteria} = {update_criteria_value};"
+        print(command)
+        self.cursor.execute(command)
+        self.cnx.commit()
+
     def query_db(self, table_name, query="*") -> list:
         command = f"SELECT {query} FROM {table_name};"
         self.cursor.execute(command)

@@ -14,6 +14,29 @@ class TaskHandler:
             "topic_id INT PRIMARY KEY AUTO_INCREMENT, topic TEXT, date_created VARCHAR(255), daydelta INT",
         )
 
+    def delete_task(self):
+        """
+        Deletes task from database
+        """
+
+    def update_db_daydelta(self):
+        """
+        Updates
+        """
+        #spacing_intervals = [1,3,7,16,32,66]
+
+        topics_in_db = self.db_handler.query_db("Topic", "topic, topic_id, date_created")
+        print(topics_in_db)
+        list_of_tasks = []
+        for data in topics_in_db:
+            list_of_tasks.append(Task(data[0],data[1],data[2]))
+
+        for i in range(len(list_of_tasks)):
+            self.db_handler.update_data("Topic","daydelta",list_of_tasks[i].date_handler.update(), "topic_id", list_of_tasks[i].topic_id)
+
+
+
+
     def make_new_task(self):
         """
         Makes new task and adds it to database
@@ -29,13 +52,4 @@ class TaskHandler:
             task_obj.date_handler.strdate,
             task_obj.date_handler.daydiff,
         )
-
-    def delete_task(self):
-        """
-        Deletes task from database
-        """
-
-    def create_task_list(self):
-        """
-        Creates list topics to be studied for the day
-        """
+        self.update_db_daydelta()
