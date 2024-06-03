@@ -59,7 +59,6 @@ class TaskHandler:
         task_list = []
         for data in topic_query:
             if data[3] in spacing_intervals:
-                print("heloo there")
                 task_list.append(data[1])
         print("Tasks for today:")
         print(task_list)
