@@ -24,16 +24,21 @@ class TaskHandler:
         """
         Updates daydelta column
         """
-        topics_in_db = self.db_handler.query_db("Topic", "topic, topic_id, date_created")
+        topics_in_db = self.db_handler.query_db(
+            "Topic", "topic, topic_id, date_created"
+        )
         list_of_tasks = []
         for data in topics_in_db:
-            list_of_tasks.append(Task(data[0],data[1],data[2]))
+            list_of_tasks.append(Task(data[0], data[1], data[2]))
 
         for i in range(len(list_of_tasks)):
-            self.db_handler.update_data("Topic","daydelta",list_of_tasks[i].date_handler.update(), "topic_id", list_of_tasks[i].topic_id)
-
-
-
+            self.db_handler.update_data(
+                "Topic",
+                "daydelta",
+                list_of_tasks[i].date_handler.update(),
+                "topic_id",
+                list_of_tasks[i].topic_id,
+            )
 
     def make_new_task(self):
         """
@@ -54,13 +59,16 @@ class TaskHandler:
         Makes List of topics to revise
         """
         self.update_db_daydelta()
-        spacing_intervals = [1,3,7,16,32,66]
+        spacing_intervals = [1, 3, 7, 16, 32, 66]
         topic_query = self.db_handler.query_db("Topic")
         task_list = []
         for data in topic_query:
             if data[3] in spacing_intervals:
                 task_list.append(data[1])
-        print("Tasks for today:")
-        print(task_list)
-
-
+        if(task_list != []):
+            i = 1
+            for task in task_list:
+                print(f"{i}. {task}")
+                i += 1
+        else:
+            print("No Tasks Today!")
